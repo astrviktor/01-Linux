@@ -1,0 +1,44 @@
+1. Устанавливаем Oracle VirtualBox
+
+2. Устанавливем Ubuntu
+
+Нужно выбрать Сеть/Сетевой мост на основную сетевую карту, тогда IP адреса будут в одном диапазоне
+
++ Устанавливаем утилиты для гостевой OS, должен заработать буфер обмена
+
+	Устройства / Подключить образ диска Дополнений гостевой ОС
+	Устанавливаем
+	Перегружаем
+	Включаем и проверяем двухсторонний буфер обмена
+
+3. Устанавливаем Putty
+
+4. Настраиваем Ubuntu
+
+Обновляемся
+
+	sudo apt-get update
+	sudo apt-get upgrade
+
+Устанавливаем и включаем OpenSSH сервер
+
+	sudo apt-cache search ssh | grep open
+	sudo apt-get install openssh-server
+
+	sudo systemctl status ssh
+	sudo systemctl enable ssh
+
+Устанавливаем mc
+
+	sudo apt-get install mc
+
+Проверяем IP адрес
+	
+	sudo apt-get install net-tools
+	ifconfig | grep inet
+
+5. Подключаемся через Putty
+
+	Вводим IP адрес и подключаемся
+	Вводим пользователя
+	Вводим пароль
