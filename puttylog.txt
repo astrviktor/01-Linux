@@ -1,0 +1,235 @@
+login as: astrviktor
+astrviktor@192.168.1.81's password:
+Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+5 packages can be updated.
+0 updates are security updates.
+
+Last login: Wed Mar 18 08:23:00 2020 from 192.168.1.68
+astrviktor@ubnt:~$ ls
+Desktop  Documents  Downloads  Music  Pictures  Public  Templates  Videos
+astrviktor@ubnt:~$ cd Documents/
+astrviktor@ubnt:~/Documents$ mkdir test1
+astrviktor@ubnt:~/Documents$ mkdir test2
+astrviktor@ubnt:~/Documents$ ls
+test1  test2
+astrviktor@ubnt:~/Documents$ cd test1
+astrviktor@ubnt:~/Documents/test1$ touch 123.txt
+astrviktor@ubnt:~/Documents/test1$ ls
+123.txt
+astrviktor@ubnt:~/Documents/test1$ cp 123.txt ../test2/
+astrviktor@ubnt:~/Documents/test1$ ls ../test2/
+123.txt
+astrviktor@ubnt:~/Documents/test1$ cd ../test2
+astrviktor@ubnt:~/Documents/test2$ mv 123.txt 321.txt
+astrviktor@ubnt:~/Documents/test2$ ls
+321.txt
+astrviktor@ubnt:~/Documents/test2$ cd ~
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+loop0    7:0    0   2,3M  1 loop /snap/gnome-calculator/180
+loop1    7:1    0  54,7M  1 loop /snap/core18/1668
+loop2    7:2    0    13M  1 loop /snap/gnome-characters/103
+loop3    7:3    0 140,9M  1 loop /snap/gnome-3-26-1604/70
+loop4    7:4    0  14,5M  1 loop /snap/gnome-logs/37
+loop5    7:5    0  34,7M  1 loop /snap/gtk-common-themes/319
+loop6    7:6    0   956K  1 loop /snap/gnome-logs/93
+loop7    7:7    0  86,9M  1 loop /snap/core/4917
+loop8    7:8    0  44,9M  1 loop /snap/gtk-common-themes/1440
+loop9    7:9    0   4,3M  1 loop /snap/gnome-calculator/704
+loop10   7:10   0 160,2M  1 loop /snap/gnome-3-28-1804/116
+loop11   7:11   0 140,7M  1 loop /snap/gnome-3-26-1604/98
+loop12   7:12   0  91,4M  1 loop /snap/core/8689
+loop13   7:13   0   3,7M  1 loop /snap/gnome-system-monitor/51
+loop14   7:14   0   3,7M  1 loop /snap/gnome-system-monitor/135
+loop15   7:15   0  14,8M  1 loop /snap/gnome-characters/495
+sda      8:0    0    20G  0 disk
+└─sda1   8:1    0    20G  0 part /
+sdb      8:16   0     2G  0 disk
+sr0     11:0    1  1024M  0 rom
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ mkfs
+mkfs         mkfs.cramfs  mkfs.ext3    mkfs.fat     mkfs.msdos   mkfs.vfat
+mkfs.bfs     mkfs.ext2    mkfs.ext4    mkfs.minix   mkfs.ntfs
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo apt-get install xfsprogs
+...
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ mkfs
+mkfs         mkfs.cramfs  mkfs.ext3    mkfs.fat     mkfs.msdos   mkfs.vfat
+mkfs.bfs     mkfs.ext2    mkfs.ext4    mkfs.minix   mkfs.ntfs    mkfs.xfs
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo mkfs.xfs /dev/sdb
+meta-data=/dev/sdb               isize=512    agcount=4, agsize=131072 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=524288, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo file -s /dev/sdb
+/dev/sdb: SGI XFS filesystem data (blksz 4096, inosz 512, v2 dirs)
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo mount /dev/sdb ~/Documents/test1
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ df -Th
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  975M     0  975M   0% /dev
+tmpfs          tmpfs     200M  1,6M  198M   1% /run
+/dev/sda1      ext4       20G  6,1G   13G  33% /
+tmpfs          tmpfs     997M  8,0K  997M   1% /dev/shm
+tmpfs          tmpfs     5,0M     0  5,0M   0% /run/lock
+tmpfs          tmpfs     997M     0  997M   0% /sys/fs/cgroup
+/dev/loop0     squashfs  2,4M  2,4M     0 100% /snap/gnome-calculator/180
+/dev/loop1     squashfs   55M   55M     0 100% /snap/core18/1668
+/dev/loop2     squashfs   13M   13M     0 100% /snap/gnome-characters/103
+/dev/loop3     squashfs  141M  141M     0 100% /snap/gnome-3-26-1604/70
+/dev/loop4     squashfs   15M   15M     0 100% /snap/gnome-logs/37
+/dev/loop5     squashfs   35M   35M     0 100% /snap/gtk-common-themes/319
+/dev/loop6     squashfs  1,0M  1,0M     0 100% /snap/gnome-logs/93
+/dev/loop7     squashfs   87M   87M     0 100% /snap/core/4917
+/dev/loop8     squashfs   45M   45M     0 100% /snap/gtk-common-themes/1440
+/dev/loop9     squashfs  4,4M  4,4M     0 100% /snap/gnome-calculator/704
+/dev/loop10    squashfs  161M  161M     0 100% /snap/gnome-3-28-1804/116
+/dev/loop11    squashfs  141M  141M     0 100% /snap/gnome-3-26-1604/98
+/dev/loop12    squashfs   92M   92M     0 100% /snap/core/8689
+/dev/loop13    squashfs  3,8M  3,8M     0 100% /snap/gnome-system-monitor/51
+/dev/loop14    squashfs  3,8M  3,8M     0 100% /snap/gnome-system-monitor/135
+/dev/loop15    squashfs   15M   15M     0 100% /snap/gnome-characters/495
+tmpfs          tmpfs     200M   28K  200M   1% /run/user/121
+tmpfs          tmpfs     200M   28K  200M   1% /run/user/1000
+/dev/sdb       xfs       2,0G   35M  2,0G   2% /home/astrviktor/Documents/test1
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ ls ~/Documents/test1
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo reboot
+...
+restart ubuntu and session
+...
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ df -Th
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  975M     0  975M   0% /dev
+tmpfs          tmpfs     200M  1,3M  199M   1% /run
+/dev/sda1      ext4       20G  6,1G   13G  33% /
+tmpfs          tmpfs     997M  8,0K  997M   1% /dev/shm
+tmpfs          tmpfs     5,0M     0  5,0M   0% /run/lock
+tmpfs          tmpfs     997M     0  997M   0% /sys/fs/cgroup
+/dev/loop0     squashfs  4,4M  4,4M     0 100% /snap/gnome-calculator/704
+/dev/loop1     squashfs   55M   55M     0 100% /snap/core18/1668
+/dev/loop2     squashfs   45M   45M     0 100% /snap/gtk-common-themes/1440
+/dev/loop3     squashfs   15M   15M     0 100% /snap/gnome-logs/37
+/dev/loop4     squashfs  161M  161M     0 100% /snap/gnome-3-28-1804/116
+/dev/loop5     squashfs   87M   87M     0 100% /snap/core/4917
+/dev/loop6     squashfs   15M   15M     0 100% /snap/gnome-characters/495
+/dev/loop7     squashfs  2,4M  2,4M     0 100% /snap/gnome-calculator/180
+/dev/loop8     squashfs  141M  141M     0 100% /snap/gnome-3-26-1604/70
+/dev/loop9     squashfs   92M   92M     0 100% /snap/core/8689
+/dev/loop10    squashfs   35M   35M     0 100% /snap/gtk-common-themes/319
+/dev/loop11    squashfs  3,8M  3,8M     0 100% /snap/gnome-system-monitor/135
+/dev/loop12    squashfs   13M   13M     0 100% /snap/gnome-characters/103
+/dev/loop13    squashfs  141M  141M     0 100% /snap/gnome-3-26-1604/98
+/dev/loop14    squashfs  1,0M  1,0M     0 100% /snap/gnome-logs/93
+/dev/loop15    squashfs  3,8M  3,8M     0 100% /snap/gnome-system-monitor/51
+tmpfs          tmpfs     200M   28K  200M   1% /run/user/121
+tmpfs          tmpfs     200M     0  200M   0% /run/user/1000
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=f4456d4a-4b0a-4f28-af52-58721b14a135 /               ext4    errors=remount-ro 0       1
+/swapfile                                 none            swap    sw              0       0
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo cp /etc/fstab /etc/fstab_backup
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo nano /etc/fstab
+
+... add sdb
+
+astrviktor@ubnt:~$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+# device; this may be used with UUID= as a more robust way to name devices
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=f4456d4a-4b0a-4f28-af52-58721b14a135 /               ext4    errors=remount-ro 0       1
+/swapfile                                 none            swap    sw              0       0
+/dev/sdb                                  /home/astrviktor/Documents/test1  xfs  rw   0   1
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo reboot
+...
+restart ubuntu and session
+...
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ df -Th
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  975M     0  975M   0% /dev
+tmpfs          tmpfs     200M  1,3M  199M   1% /run
+/dev/sda1      ext4       20G  6,1G   13G  33% /
+tmpfs          tmpfs     997M  8,0K  997M   1% /dev/shm
+tmpfs          tmpfs     5,0M     0  5,0M   0% /run/lock
+tmpfs          tmpfs     997M     0  997M   0% /sys/fs/cgroup
+/dev/loop0     squashfs   87M   87M     0 100% /snap/core/4917
+/dev/loop1     squashfs  3,8M  3,8M     0 100% /snap/gnome-system-monitor/51
+/dev/loop2     squashfs   15M   15M     0 100% /snap/gnome-characters/495
+/dev/loop3     squashfs   35M   35M     0 100% /snap/gtk-common-themes/319
+/dev/loop4     squashfs  1,0M  1,0M     0 100% /snap/gnome-logs/93
+/dev/loop5     squashfs   13M   13M     0 100% /snap/gnome-characters/103
+/dev/loop6     squashfs  141M  141M     0 100% /snap/gnome-3-26-1604/98
+/dev/loop7     squashfs  2,4M  2,4M     0 100% /snap/gnome-calculator/180
+/dev/loop8     squashfs   15M   15M     0 100% /snap/gnome-logs/37
+/dev/loop9     squashfs  141M  141M     0 100% /snap/gnome-3-26-1604/70
+/dev/loop10    squashfs  4,4M  4,4M     0 100% /snap/gnome-calculator/704
+/dev/loop11    squashfs   45M   45M     0 100% /snap/gtk-common-themes/1440
+/dev/loop12    squashfs  161M  161M     0 100% /snap/gnome-3-28-1804/116
+/dev/loop13    squashfs  3,8M  3,8M     0 100% /snap/gnome-system-monitor/135
+/dev/loop14    squashfs   92M   92M     0 100% /snap/core/8689
+/dev/loop15    squashfs   55M   55M     0 100% /snap/core18/1668
+/dev/sdb       xfs       2,0G   35M  2,0G   2% /home/astrviktor/Documents/test1
+tmpfs          tmpfs     200M   28K  200M   1% /run/user/121
+tmpfs          tmpfs     200M     0  200M   0% /run/user/1000
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo poweroff
