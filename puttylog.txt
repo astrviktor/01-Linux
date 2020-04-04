@@ -1,0 +1,139 @@
+login as: astrviktor
+astrviktor@192.168.1.102's password:
+Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+19 packages can be updated.
+0 updates are security updates.
+
+Last login: Sat Apr  4 15:58:26 2020 from 192.168.1.103
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo systemctl status ufw
+● ufw.service - Uncomplicated firewall
+   Loaded: loaded (/lib/systemd/system/ufw.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Sat 2020-04-04 16:26:21 MSK; 1min 40s ago
+     Docs: man:ufw(8)
+  Process: 226 ExecStart=/lib/ufw/ufw-init start quiet (code=exited, status=0/SUCCESS)
+ Main PID: 226 (code=exited, status=0/SUCCESS)
+
+Warning: Journal has been rotated since unit was started. Log output is incomplete or unavailable.
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo systemctl stop ufw
+astrviktor@ubnt:~$ sudo systemctl disable ufw
+Synchronizing state of ufw.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable ufw
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo apt-get install nmap nginx -y
+...
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ nmap localhost
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2020-04-04 16:33 MSK
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00063s latency).
+Not shown: 998 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 0.27 seconds
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+...
+тест из браузера http://192.168.1.102:80/ - работает
+тест из браузера http://192.168.1.102:8080/ - не работает
+...
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo su
+[sudo] password for astrviktor:
+root@ubnt:/home/astrviktor#
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+root@ubnt:/home/astrviktor# cd ~
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~# echo 1 >> /proc/sys/net/ipv4/conf/all/forwarding
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~# iptables -A INPUT -p tcp --dport ssh -s 192.168.0.0/16 -j ACCEPT
+root@ubnt:~# iptables -A INPUT -p tcp --dport ssh -s 10.0.0.0/8 -j ACCEPT
+root@ubnt:~#
+root@ubnt:~# iptables -A INPUT -p tcp --dport http -j ACCEPT
+root@ubnt:~# iptables -A INPUT -p tcp --dport https -j ACCEPT
+root@ubnt:~#
+root@ubnt:~# iptables -P INPUT DROP
+root@ubnt:~#
+root@ubnt:~# iptables -P FORWARD DROP
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~# iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+root@ubnt:~#
+...
+тест из браузера http://192.168.1.102:80/ - работает
+тест из браузера http://192.168.1.102:8080/ - работает
+...
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~# iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination
+REDIRECT   tcp  --  anywhere             anywhere             tcp dpt:http-alt redir ports 80
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~# iptables -t filter -L
+Chain INPUT (policy DROP)
+target     prot opt source               destination
+ACCEPT     tcp  --  192.168.0.0/16       anywhere             tcp dpt:ssh
+ACCEPT     tcp  --  10.0.0.0/8           anywhere             tcp dpt:ssh
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:http
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:https
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~#
+root@ubnt:~# poweroff
