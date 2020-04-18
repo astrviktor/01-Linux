@@ -1,0 +1,99 @@
+login as: astrviktor
+astrviktor@192.168.1.81's password:
+Welcome to Ubuntu 18.04.4 LTS (GNU/Linux 4.15.0-91-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+18 packages can be updated.
+0 updates are security updates.
+
+Last login: Sun Mar 22 11:58:20 2020 from 192.168.1.68
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ touch file1.txt
+astrviktor@ubnt:~$ touch file2.txt
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ chmod 644 file1.txt
+astrviktor@ubnt:~$ chmod 600 file2.txt
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ chmod u=rwx,g=rw,o=rw file1.txt
+astrviktor@ubnt:~$ chmod u=rwx,g=-rwx,o=-rwx file2.txt
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ ls -l file1.txt
+-rwxrw-rw- 1 astrviktor astrviktor 0 мар 29 08:29 file1.txt
+astrviktor@ubnt:~$ ls -l file2.txt
+-rwx------ 1 astrviktor astrviktor 0 мар 29 08:29 file2.txt
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo useradd test
+[sudo] password for astrviktor:
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ id test
+uid=1001(test) gid=1001(test) groups=1001(test)
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo usermod -aG sudo test
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ id test
+uid=1001(test) gid=1001(test) groups=1001(test),27(sudo)
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo useradd test1
+astrviktor@ubnt:~$ sudo useradd test2
+astrviktor@ubnt:~$ sudo useradd test3
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo groupadd developer
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ cat /etc/group
+astrviktor@ubnt:~$ cat /etc/group | grep developer
+developer:x:1005:
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo usermod -aG developer test1
+astrviktor@ubnt:~$ sudo usermod -aG developer test2
+astrviktor@ubnt:~$ sudo usermod -aG developer test3
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ id test1
+uid=1002(test1) gid=1002(test1) groups=1002(test1),1005(developer)
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ find /home/astrviktor -iname ".*"
+/home/astrviktor/.bash_logout
+/home/astrviktor/.profile
+/home/astrviktor/.bashrc
+/home/astrviktor/.wget-hsts
+/home/astrviktor/.gnupg
+/home/astrviktor/.bash_history
+/home/astrviktor/.cache
+/home/astrviktor/.vboxclient-display.pid
+/home/astrviktor/.sudo_as_admin_successful
+/home/astrviktor/.vboxclient-draganddrop.pid
+/home/astrviktor/.config
+/home/astrviktor/.vboxclient-seamless.pid
+/home/astrviktor/.local
+/home/astrviktor/.ICEauthority
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ find /home/astrviktor -iname ".*" | wc -l
+14
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$
+astrviktor@ubnt:~$ sudo poweroff
